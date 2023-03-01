@@ -1,23 +1,13 @@
-#! /bin/bash
-sudo yum install -y docker
-sudo service docker start
-export ECR=570629616813.dkr.ecr.us-east-1.amazonaws.com
-export DBECR=$ECR/database-image-clo835-docker-assignment:latest
-export APPECR=$ECR/app-image-clo835-docker-assignment:latest
-export DBPORT=3306
-export DBUSER=root
-export DATABASE=employees
-export DBPWD=pw
-aws ecr get-login-password --region us-east-1 |sudo docker login -u AWS ${ECR} --password-stdin   
-sudo docker pull $DBECR
-sudo docker pull $APPECR
-sudo docker network create customBridge
-sudo docker run --name mysql-db --network=customBridge -d -e MYSQL_ROOT_PASSWORD=pw $DBECR
-export DBHOST=$(sudo docker inspect --format '{{ .NetworkSettings.Networks.customBridge.IPAddress }}' mysql-db)
-sleep 40
-export APP_COLOR=blue
-sudo docker run -d --name blue -p 8081:8080  --network=customBridge -e APP_COLOR=$APP_COLOR -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD $APPECR
-export APP_COLOR=green
-sudo docker run -d --name lime -p 8082:8080  --network=customBridge -e APP_COLOR=$APP_COLOR -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD $APPECR
-export APP_COLOR=pink
-sudo docker run -d --name pink -p 8083:8080  --network=customBridge -e APP_COLOR=$APP_COLOR -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD $APPECR
+#!/bin/bash
+set -ex
+sudo yum update -y
+sudo yum install docker -y
+sudo systemctl start docker
+sudo usermod -a -G docker ec2-user
+curl -sLo kind https://kind.sigs.k8s.io/dl/v0.11.0/kind-linux-amd64
+sudo install -o root -g root -m 0755 kind /usr/local/bin/kind
+rm -f ./kind
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+rm -f ./kubectl
+kind create cluster --config kind.yaml
