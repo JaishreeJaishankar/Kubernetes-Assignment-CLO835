@@ -1,5 +1,5 @@
 variable "project_name" {
-  default     = "clo835-kubernetes-assignment"
+  default     = "kubernetes-assignment"
   type        = string
   description = "Name of the project - to be used as prefix"
 }
