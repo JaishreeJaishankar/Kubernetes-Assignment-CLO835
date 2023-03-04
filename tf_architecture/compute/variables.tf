@@ -8,7 +8,7 @@ variable "default_tags" {
 }
 
 variable "instance_type" {
-  default     = "t3.micro"
+  default     = "t3.medium"
   type        = string
   description = "Type of the instance"
 }
