@@ -1,34 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: colorapp
+  name: mysql
   labels:
-    name: colorapp
-    component: frontend
+    app: mysql
+    component: database
 spec:
   replicas: 3
   selector:
     matchLabels:
-      name: colorapp
+      app: mysql
   template:
     metadata:
       labels:
-        name: colorapp
-        component: frontend
+        app: mysql
+        component: database
     spec:
       containers:
-        - name: colorapp-container
-          image: 570629616813.dkr.ecr.us-east-1.amazonaws.com/app-image-clo835-kubernetes-assignment:latest
+        - name: mysql-container
+          image: 570629616813.dkr.ecr.us-east-1.amazonaws.com/database-image-clo835-kubernetes-assignment:latest
           env:
-            - name: DBPWD
+            - name: MYSQL_ROOT_PASSWORD
               value: pw
-            - name: DBUSER
-              value: root
-            - name: DBHOST
-              value: "mysql.k8s-assgn.svc.cluster.local"
-            - name: DBPORT
-              value: "3306"
           ports:
-            - containerPort: 8080
+            - containerPort: 3306
       imagePullSecrets:
-        - name: regcred
+          - name: regcred

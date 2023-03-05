@@ -3,17 +3,17 @@ kind: Deployment
 metadata:
   name: mysql
   labels:
-    name: mysql
+    app: mysql
     component: database
 spec:
   replicas: 3
   selector:
     matchLabels:
-      name: mysql
+      app: mysql
   template:
     metadata:
       labels:
-        name: mysql
+        app: mysql
         component: database
     spec:
       containers:

@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: colorapp
+  name: application
   labels:
-    name: colorapp
+    app: employees
     component: frontend
 spec:
   ports:
     - port: 8080
   selector:
-    name: colorapp
+    app: employees

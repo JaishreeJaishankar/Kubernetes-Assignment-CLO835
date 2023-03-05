@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: mysql
   labels:
-    name: mysql
+    app: mysql
     component: database
 spec:
   containers:
@@ -16,4 +16,3 @@ spec:
         - containerPort: 3306
   imagePullSecrets:
           - name: regcred
-      

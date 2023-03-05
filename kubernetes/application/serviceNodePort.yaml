@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: colorapp
+  name: application
   labels:
-    name: colorapp
+    app: employees 
     component: frontend
 spec:
   type: NodePort
@@ -12,4 +12,4 @@ spec:
       targetPort: 8080
       nodePort: 30000
   selector:
-    name: colorapp
+    app: employees
