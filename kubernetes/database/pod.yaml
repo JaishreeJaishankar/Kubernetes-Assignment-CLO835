@@ -3,7 +3,6 @@ kind: Pod
 metadata:
   name: mysql
   labels:
-    app: mysql
     component: database
 spec:
   containers:
